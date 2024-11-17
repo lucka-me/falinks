@@ -31,7 +31,7 @@ $ swift run falinks <subcommand> -d <work-directory> [options...]
 Since Falinks queries data from OSM which is built by contributors from all around the world, it's highly recommended to run the commands by steps and always check the result manually.
 If data-related error occurs or the result is incorrect, please try to contribute a fix to OSM.
 
-### Fetch metadata
+### Fetch Metadata
 
 ```shell
 $ swift run falinks metadata -d <work-directory> [options...]
@@ -41,7 +41,7 @@ Falink quries relations of countries and their subdivisions with Overpass API to
 
 The list of countries without subdivisions are [hard-coded](./Sources/Generator/Generator+Metadata.swift).
 
-### Fetch geometries
+### Fetch and Build Geometries
 
 ```shell
 $ swift run falinks geometry -d <work-directory> [options...]
@@ -53,7 +53,7 @@ For OSM, boundaries of one region should be close to represent the region, the r
 Since Falinks generates geometry of the land part of regions, we need to fetch both land boundaries and coastlines in its region.
 However, boundaries and coastlines are not guaranteed to be connected to each other, therefore it's recommended to generate one geometry each time, and it may be necessary to omit some segments manually with option `--omit-segments <id...>`.
 
-### Generate covers
+### Generate Covers
 
 ```shell
 $ swift run falinks geometry -d <work-directory> [options...]
@@ -70,7 +70,7 @@ To prevent system falling asleep, use `caffeinate` command:
 $ caffeinate -is swift run falinks geometry -d <work-directory> [options...]
 ```
 
-## Generate Indecies
+### Generate Indecies
 
 ```shell
 $ swift run falinks index -d <work-directory> [options...]
@@ -80,7 +80,7 @@ Falinks generates two JSON files:
 - `regions.json` contains hierarchy of the countries and their subdivisions, with their area and bounding boxes
 - `cells.json` contains level 5 cells to regions index of all covers
 
-## Generate Wikidata
+### Fetch Wikidata
 
 ```shell
 $ swift run falinks wikidata -d <work-directory> [options...]
