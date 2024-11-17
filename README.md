@@ -1,5 +1,7 @@
 # Falinks
 
+[![](https://tokei.rs/b1/github/lucka-me/falinks)](https://github.com/lucka-me/falinks)
+
 Generate geometry data of administrative regions from OpenStreetMap.
 
 ## At a Glance
