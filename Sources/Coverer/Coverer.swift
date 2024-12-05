@@ -27,7 +27,7 @@ public extension Coverer {
     }
     
     @inlinable func cover(_ geometry: CellAlgebra) -> CellCollection {
-        self.cover(geometry, with: .wholeSpere)
+        self.cover(geometry, with: .wholeSphere)
     }
     
     func cover(_ geometry: CellAlgebra, with initialCandidates: CellCollection) -> CellCollection {
