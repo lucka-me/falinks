@@ -8,7 +8,7 @@
 import ArgumentParser
 
 struct WikidataArguments : ParsableArguments {
-    @Option
+    @Option(parsing: .upToNextOption)
     var languages: [ String ] = [ "en" ]
 }
 
