@@ -59,7 +59,7 @@ fileprivate extension Generator {
         let compressedFile = compressedCellFileURL(of: region.code)
         
         let collectionData: Data
-        if !fileManager.fileExists(atPath: rawFile.path()) {
+        if !fileManager.fileExists(atPath: rawFile.path(percentEncoded: false)) {
             let geometry = try JSONDecoder()
                 .decode(
                     MultiPolygon.self,
@@ -93,13 +93,13 @@ fileprivate extension Generator {
                         .appendingPathExtension("json")
                 )
             
-        } else if compress, !fileManager.fileExists(atPath: compressedFile.path()) {
+        } else if compress, !fileManager.fileExists(atPath: compressedFile.path(percentEncoded: false)) {
             collectionData = try .init(contentsOf: rawFile)
         } else {
             return
         }
         
-        fileManager.createFile(atPath: compressedFile.path(), contents: nil)
+        fileManager.createFile(atPath: compressedFile.path(percentEncoded: false), contents: nil)
         let compressedFileHandle = try FileHandle(forWritingTo: compressedFile)
         let outputFilter = try OutputFilter(.compress, using: .lzfse) { segment in
             if let segment {

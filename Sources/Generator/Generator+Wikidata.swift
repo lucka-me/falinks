@@ -49,7 +49,7 @@ public extension Generator {
             .appending(component: "regions")
             .appendingPathExtension("xcstrings")
         
-        if FileManager.default.fileExists(atPath: localizationFile.path()) {
+        if FileManager.default.fileExists(atPath: localizationFile.path(percentEncoded: false)) {
             stringCatalog.strings.merge(
                 try JSONDecoder().decode(StringCatalog.self, from: try .init(contentsOf: localizationFile)).strings
             ) { currentItem, newItem in
@@ -100,7 +100,7 @@ fileprivate extension Generator {
         
         let rawFile = wikidataRawFileURL(of: region.code)
         let entity: Entity?
-        if fileManager.fileExists(atPath: rawFile.path()) {
+        if fileManager.fileExists(atPath: rawFile.path(percentEncoded: false)) {
             entity = try JSONDecoder()
                 .decode(EntityData.self, from: try .init(contentsOf: rawFile))
                 .entities.first?.value
@@ -129,7 +129,7 @@ fileprivate extension Generator {
                 .appending(component: region.code.rawValue)
                 .appendingPathExtension(fileExtension)
             
-            if !fileManager.fileExists(atPath: flagImageFile.path()) {
+            if !fileManager.fileExists(atPath: flagImageFile.path(percentEncoded: false)) {
                 let (temporaryFileURL, _) = try await taskGroup.addTask {
                     try await URLSession.shared.download(
                         from: Self.wikimediaURL.appending(

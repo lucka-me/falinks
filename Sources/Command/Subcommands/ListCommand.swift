@@ -27,11 +27,11 @@ struct ListCommand : AsyncParsableCommand {
         switch target {
         case .missingGeometry:
             regions = await generator.regions {
-                !fileManager.fileExists(atPath: generator.geometryFileURL(of: $0.code).path())
+                !fileManager.fileExists(atPath: generator.geometryFileURL(of: $0.code).path(percentEncoded: false))
             }
         case .missingCovers:
             regions = await generator.regions {
-                !fileManager.fileExists(atPath: generator.rawCellFileURL(of: $0.code).path())
+                !fileManager.fileExists(atPath: generator.rawCellFileURL(of: $0.code).path(percentEncoded: false))
             }
         case .missingWikidata:
             regions = await generator.regions {

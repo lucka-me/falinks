@@ -54,7 +54,7 @@ public extension Generator {
         let fileManager = FileManager.default
         let regionIndexFile = regionIndexFileURL
         
-        if fileManager.fileExists(atPath: regionIndexFile.path()) {
+        if fileManager.fileExists(atPath: regionIndexFile.path(percentEncoded: false)) {
             regionIndex.merge(
                 try JSONDecoder().decode(RegionIndex.self, from: try .init(contentsOf: regionIndexFile))
             ) { current, _ in
@@ -63,7 +63,7 @@ public extension Generator {
         }
         
         let cellIndexFile = cellIndexFileURL
-        if fileManager.fileExists(atPath: cellIndexFile.path()) {
+        if fileManager.fileExists(atPath: cellIndexFile.path(percentEncoded: false)) {
             cellIndex.merge(
                 try JSONDecoder().decode(CellIndex.self, from: try .init(contentsOf: cellIndexFile))
             ) { current, new in

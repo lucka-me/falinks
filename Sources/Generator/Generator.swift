@@ -42,7 +42,7 @@ extension Generator {
 
 fileprivate extension FileManager {
     func ensureDirectory(at url: URL) throws {
-        if !fileExists(atPath: url.path()) {
+        if !fileExists(atPath: url.path(percentEncoded: false)) {
             try createDirectory(at: url, withIntermediateDirectories: true)
         }
     }

@@ -71,7 +71,7 @@ fileprivate extension Generator {
         of region: Region, with api: Overpass, cooldown: Duration, omitting: Omit
     ) async throws {
         let file = geometryFileURL(of: region.code)
-        guard !FileManager.default.fileExists(atPath: file.path()) else {
+        guard !FileManager.default.fileExists(atPath: file.path(percentEncoded: false)) else {
             return
         }
         

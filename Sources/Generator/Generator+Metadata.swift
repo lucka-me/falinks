@@ -100,7 +100,7 @@ fileprivate extension Generator {
     
     func ensureCountries(with api: Overpass, cooldown: Duration) async throws {
         let file = countryMetadataFileURL
-        guard !FileManager.default.fileExists(atPath: file.path()) else {
+        guard !FileManager.default.fileExists(atPath: file.path(percentEncoded: false)) else {
             try loadCountries()
             return
         }
@@ -123,7 +123,7 @@ fileprivate extension Generator {
         }
         
         let file = subdivisionMetadataFileURL(of: country.code)
-        guard !FileManager.default.fileExists(atPath: file.path()) else {
+        guard !FileManager.default.fileExists(atPath: file.path(percentEncoded: false)) else {
             countries[index].subdivisions = try loadSubdivisions(of: country.code, filterBy: filter)
             return
         }
