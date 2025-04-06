@@ -6,14 +6,9 @@
 //
 
 import ArgumentParser
+import Foundation
 
 struct WikidataArguments : ParsableArguments {
     @Option(parsing: .upToNextOption)
-    var languages: [ String ] = [ "en" ]
-}
-
-extension WikidataArguments {
-    var languagesToInclude: Set<String> {
-        .init(languages)
-    }
+    var locales: [ Locale ] = [ .init(identifier: "en") ]
 }

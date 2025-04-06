@@ -21,6 +21,6 @@ struct WikidataCommand : AsyncParsableCommand {
     mutating func run() async throws {
         let generator = try shared.generator
         try await generator.loadMetadata(including: shared.regionsToInclude)
-        try await generator.loadWikidata(including: wikidata.languagesToInclude)
+        try await generator.loadWikidata(including: wikidata.locales)
     }
 }

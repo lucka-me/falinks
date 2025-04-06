@@ -8,16 +8,16 @@
 import Foundation
 
 public extension Generator {
-    func loadWikidata(including languages: Set<String>) async throws {
+    func loadWikidata(including locales: [ Locale ]) async throws {
         let entities = try await withThrowingTaskGroup(of: RegionEntity?.self) { group in
             for country in self.countries {
                 group.addTask {
-                    try await self.loadWikidata(of: country, including: languages)
+                    try await self.loadWikidata(of: country, including: locales)
                 }
                 if let subdivisions = country.subdivisions {
                     for subdivision in subdivisions {
                         group.addTask {
-                            try await self.loadWikidata(of: subdivision, including: languages)
+                            try await self.loadWikidata(of: subdivision, including: locales)
                         }
                     }
                 }
@@ -91,7 +91,7 @@ fileprivate extension Generator {
     static let wikidataEntityDataURL = URL(string: "https://wikidata.org/wiki/Special:EntityData")!
     static let wikimediaURL = URL(string: "https://commons.wikimedia.org/w/index.php")!
     
-    func loadWikidata(of region: Region, including languages: Set<String>) async throws -> RegionEntity? {
+    func loadWikidata(of region: Region, including locales: [ Locale ]) async throws -> RegionEntity? {
         guard let wikidataIdentifier = region.wikidataIdentifier else {
             return nil
         }
@@ -146,9 +146,19 @@ fileprivate extension Generator {
         
         return .init(
             code: region.code,
-            localizations: entity.labels
-                .filter { languages.isEmpty || languages.contains($0.key) }
-                .reduce(into: .init()) { $0[$1.key] = $1.value.value }
+            localizations: locales.reduce(into: [ : ]) { result, locale in
+                if let label = entity.labels[locale.identifier.lowercased()] {
+                    result[locale.identifier] = label.value
+                    return
+                }
+                // Fallback to language code
+                if
+                    let identifier = locale.language.languageCode?.identifier.lowercased(),
+                    let label = entity.labels[identifier] {
+                    result[locale.identifier] = label.value
+                    return
+                }
+            }
         )
     }
 }

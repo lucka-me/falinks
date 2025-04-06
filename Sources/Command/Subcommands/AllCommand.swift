@@ -53,6 +53,6 @@ struct AllCommand : AsyncParsableCommand {
         try await generator.generateIndices()
         
         print("Generating wikidata...")
-        try await generator.loadWikidata(including: wikidata.languagesToInclude)
+        try await generator.loadWikidata(including: wikidata.locales)
     }
 }

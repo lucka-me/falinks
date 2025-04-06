@@ -13,5 +13,11 @@ import SphereGeometry
 extension Level : @retroactive ExpressibleByArgument {
 }
 
+extension Locale : @retroactive ExpressibleByArgument {
+    public init(argument: String) {
+        self.init(identifier: argument)
+    }
+}
+
 extension Region.Code : ExpressibleByArgument {
 }
